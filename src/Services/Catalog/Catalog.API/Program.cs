@@ -7,7 +7,10 @@ builder
     {
         config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
     });
-
+builder.Services.AddMarten(config =>
+{
+    config.Connection(builder.Configuration.GetConnectionString("Database")!);
+});
 var app = builder.Build();
 //add middlewares to proj pipeline
 app.MapCarter();
