@@ -10,7 +10,7 @@ builder
 builder.Services.AddMarten(config =>
 {
     config.Connection(builder.Configuration.GetConnectionString("Database")!);
-});
+}).UseLightweightSessions();
 var app = builder.Build();
 //add middlewares to proj pipeline
 app.MapCarter();
