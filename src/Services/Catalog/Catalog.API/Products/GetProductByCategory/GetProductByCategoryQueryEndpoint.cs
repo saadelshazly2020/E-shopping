@@ -10,11 +10,10 @@ namespace Catalog.API.Products.GetProductById
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPut("/productsByCategory",
-               async (GetProductByCategoryQueryRequest request, ISender sender) =>
+            app.MapGet("/products/category/{category}",
+               async (string category, ISender sender) =>
                {
-                   var query = request.Adapt<GetProductByCategoryQuery>();
-                   var result = await sender.Send(query);
+                   var result = await sender.Send(new GetProductByCategoryQuery(category));
                    if (result.Products==null || result.Products.Count()==0)
                    {
                        return Results.NotFound();
