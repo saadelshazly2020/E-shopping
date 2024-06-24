@@ -11,7 +11,7 @@ namespace Catalog.API.Products.CreateProduct
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
             //create new product object
-            var product = new Models.Products
+            var product = new Models.Product
             {
                 Name = command.Name,
                 Category = command.Category,
