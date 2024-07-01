@@ -12,7 +12,7 @@ namespace Catalog.API.Products.DeleteProduct
             RuleFor(x=>x.Id).NotEmpty().WithMessage("Id is required");
         }
     }
-    public class DeleteProductCommandHandler(IDocumentSession session, ILogger<DeleteProductCommandHandler> logger)
+    public class DeleteProductCommandHandler(IDocumentSession session)
 
         : ICommandHandler<DeleteProductCommand, DeleteProductResult>
     {
