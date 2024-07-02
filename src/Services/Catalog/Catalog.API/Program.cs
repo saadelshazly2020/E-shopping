@@ -2,6 +2,8 @@
 
 
 using Catalog.API.Data;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 //add services to DI container
@@ -25,6 +27,10 @@ if (builder.Environment.IsDevelopment())
 
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+//add health check service for application and postresql database
+
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+
 var app = builder.Build();
 
 
@@ -32,4 +38,10 @@ var app = builder.Build();
 app.MapCarter();
 
 app.UseExceptionHandler(opt => { });
+
+//use ui option for health check to be in json format response
+app.UseHealthChecks("/Health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 app.Run();
