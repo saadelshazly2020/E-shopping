@@ -1,40 +1,35 @@
 
-
-
-using Catalog.API.Data;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
 var builder = WebApplication.CreateBuilder(args);
 //add services to DI container
 
-builder.Services.AddCarter();
+builder.Services.AddCarter();//minimal api
 builder.Services.AddMediatR(config =>
     {
-        config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
-        config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-        config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+        config.RegisterServicesFromAssemblies(typeof(Program).Assembly);//register mediator service from this assembly
+        config.AddOpenBehavior(typeof(ValidationBehavior<,>));//add validation behavior to mediator pipeline 
+        config.AddOpenBehavior(typeof(LoggingBehavior<,>));//add logging behavior to mediator pipeline 
     });
 
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
-builder.Services.AddMarten(config =>
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);//add all fluent validation validators
+builder.Services.AddMarten(config =>//for postgresql ORM
 {
     config.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment())//seed data id development
     builder.Services.InitializeMartenWith<CatalogInitializeData>();
 
 
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();//add custom exception handler service 
 //add health check service for application and postresql database
 
-builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!);//add health check service for app and postgresql database
 
 var app = builder.Build();
 
-
 //add middlewares to proj pipeline
+
+
 app.MapCarter();
 
 app.UseExceptionHandler(opt => { });
