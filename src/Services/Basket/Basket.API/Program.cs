@@ -1,5 +1,6 @@
 
 
+using Basket.API.Data;
 using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +23,9 @@ builder.Services.AddMarten(config =>//for postgresql ORM
     config.Connection(builder.Configuration.GetConnectionString("Database")!);
     config.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 }).UseLightweightSessions();
-//builder.Services.AddMarten(config =>//for postgresql ORM
-//{
-//    config.Connection(builder.Configuration.GetConnectionString("Database")!);
-//}).UseLightweightSessions();
 
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 
