@@ -1,5 +1,7 @@
 
 
+using Marten;
+
 var builder = WebApplication.CreateBuilder(args);
 //configure services here 
 
@@ -15,6 +17,11 @@ builder.Services.AddMediatR(config =>
 });
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);//add all fluent validation validators
+builder.Services.AddMarten(config =>//for postgresql ORM
+{
+    config.Connection(builder.Configuration.GetConnectionString("Database")!);
+    config.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+}).UseLightweightSessions();
 //builder.Services.AddMarten(config =>//for postgresql ORM
 //{
 //    config.Connection(builder.Configuration.GetConnectionString("Database")!);
