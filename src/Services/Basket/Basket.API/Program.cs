@@ -1,6 +1,7 @@
 
 
 using Basket.API.Data;
+using BuildingBlocks.Exceptions.handlers;
 using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,10 +28,14 @@ builder.Services.AddMarten(config =>//for postgresql ORM
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //configure app pipeline here
 
 app.MapCarter();
+
+app.UseExceptionHandler(options => { });
 
 app.Run();
