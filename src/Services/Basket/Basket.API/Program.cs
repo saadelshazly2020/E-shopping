@@ -3,6 +3,7 @@
 using Basket.API.Data;
 using BuildingBlocks.Exceptions.handlers;
 using Marten;
+using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
 //configure services here 
@@ -26,9 +27,29 @@ builder.Services.AddMarten(config =>//for postgresql ORM
 }).UseLightweightSessions();
 
 
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+//add caching CachedBasketRepository decorator[decorator pattern]
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+//you can register CachedBasketRepository decorator manually like the following
+
+//builder.Services.AddScoped<IBasketRepository>(provider =>
+//{
+//    var basketRepository=provider.GetRequiredService<IBasketRepository>();
+//    var distributedCache= provider.GetRequiredService<IDistributedCache>();
+//    return new CachedBasketRepository(basketRepository, distributedCache);
+//});
+
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("redis");
+    //options.InstanceName = "SampleInstance";
+});
+
 
 var app = builder.Build();
 
