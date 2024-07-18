@@ -2,7 +2,9 @@
 
 using Basket.API.Data;
 using BuildingBlocks.Exceptions.handlers;
+using HealthChecks.UI.Client;
 using Marten;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +53,11 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 
+//add health check service for application and postresql database
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("redis")!);//add health check service for app and postgresql database
+
+
 var app = builder.Build();
 
 //configure app pipeline here
@@ -58,5 +65,11 @@ var app = builder.Build();
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });
+
+//use ui option for health check to be in json format response
+app.UseHealthChecks("/Health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
