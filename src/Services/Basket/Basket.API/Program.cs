@@ -2,6 +2,7 @@
 
 using Basket.API.Data;
 using BuildingBlocks.Exceptions.handlers;
+using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -56,6 +57,18 @@ builder.Services.AddStackExchangeRedisCache(options =>
 //add health check service for application and postresql database
 builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("redis")!);//add health check service for app and postgresql database
+//Add Grpc client to 
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
+{
+    opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler { 
+    ServerCertificateCustomValidationCallback=HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+    return handler;
+});
 
 
 var app = builder.Build();
