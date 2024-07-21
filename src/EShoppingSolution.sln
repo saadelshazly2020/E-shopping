@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{32DC80C0-0F8B-408D-89C5-885C39352DC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{A0B3D85F-E8B1-4602-821B-672562AF304C}"
+	ProjectSection(SolutionItems) = preProject
+		Services\Discount\Discount.Grpc\appsettings.Development.json = Services\Discount\Discount.Grpc\appsettings.Development.json
+		Services\Discount\Discount.Grpc\appsettings.json = Services\Discount\Discount.Grpc\appsettings.json
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{7AE86D02-7C3F-4783-9E18-B09E66E946CF}"
 EndProject
