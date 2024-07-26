@@ -1,10 +1,14 @@
 ﻿
 
+
 namespace Ordering.Domain.Models
 {
     public class Order : Aggregate<OrderId>
     {
         private readonly List<OrderItem> _orderItems = new();
+
+
+
         private IReadOnlyList<OrderItem> OrderItems => _orderItems;
 
         public CustomerId CustomerId { get; private set; } = default!;
@@ -23,5 +27,53 @@ namespace Ordering.Domain.Models
             private set { }
         }
 
+
+
+        public Order Create(CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+        {
+            var order = new Order
+            {
+                CustomerId = customerId,
+                OrderName = orderName,
+                ShippingAddress = shippingAddress,
+                BillingAddress = billingAddress,
+                Payment = payment,
+                Status = OrderStatus.Pending,
+            };
+
+            order.AddDomainEvent(new OrderCreatedEvent(order));
+            return order;
+        }
+
+        public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+        {
+            OrderName = orderName;
+            ShippingAddress = shippingAddress;
+            BillingAddress = billingAddress;
+            Payment = payment;
+            Status = status;
+
+            AddDomainEvent(new OrderUpdatedEvent(this));
+        }
+
+        //add order item 
+        public void Add(ProductId productId, int quantity, decimal price)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+            var orderItem = new OrderItem(Id, productId, quantity, price);
+
+            _orderItems.Add(orderItem);
+        }
+
+        //remove order item
+        public void Update(ProductId productId)
+        {
+            var order = _orderItems.FirstOrDefault(x => x.ProductId == productId);
+            if (order is not null)
+            {
+                _orderItems.Remove(order);
+            }
+        }
     }
 }
