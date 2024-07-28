@@ -9,7 +9,7 @@ namespace Ordering.Domain.Models
 
 
 
-        private IReadOnlyList<OrderItem> OrderItems => _orderItems;
+        public IReadOnlyList<OrderItem> OrderItems => _orderItems;
 
         public CustomerId CustomerId { get; private set; } = default!;
 

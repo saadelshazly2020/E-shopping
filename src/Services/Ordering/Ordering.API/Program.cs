@@ -5,7 +5,10 @@ using Ordering.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 //ADD DI services
-builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration).AddApiServices();
+builder.Services
+    .AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration)
+    .AddApiServices();
 
 
 var app = builder.Build();
