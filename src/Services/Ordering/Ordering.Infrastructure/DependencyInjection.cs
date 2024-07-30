@@ -13,6 +13,7 @@ namespace Ordering.Infrastructure
             services
                 .AddDbContext<ApplicationDBContext>(opt => opt.UseSqlServer(connectionString));
 
+
             return services;
         }
 

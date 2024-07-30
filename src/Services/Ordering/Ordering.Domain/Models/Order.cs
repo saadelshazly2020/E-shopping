@@ -29,10 +29,11 @@ namespace Ordering.Domain.Models
 
 
 
-        public Order Create(CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
+        public static Order Create(OrderId orderId, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
         {
             var order = new Order
             {
+                Id = orderId,
                 CustomerId = customerId,
                 OrderName = orderName,
                 ShippingAddress = shippingAddress,
