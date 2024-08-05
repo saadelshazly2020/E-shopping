@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.Infrastructure.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : DbContext, IApplicationDBContext
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
         {

@@ -53,7 +53,6 @@ namespace Ordering.Domain.Models
             BillingAddress = billingAddress;
             Payment = payment;
             Status = status;
-
             AddDomainEvent(new OrderUpdatedEvent(this));
         }
 
