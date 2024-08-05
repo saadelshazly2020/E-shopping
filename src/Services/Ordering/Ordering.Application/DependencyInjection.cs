@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BuildingBlocks.Behaviors;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +14,11 @@ namespace Ordering.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             //add services here 
-
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());//register mediator service from current assembly
+              
+            });
             return services;
 
         }
