@@ -29,18 +29,19 @@ namespace Ordering.Infrastructure.Data.Interceptors
         private async Task DispatchDomainEvents(DbContext? context)
         {
             if (context == null) return;
-
+            //get all aggregates that have domain events
             var aggregates = context.ChangeTracker
                 .Entries<IAggregate>()
                 .Where(x => x.Entity.DomainEvents.Any())
                 .Select(x => x.Entity);
-
+            //get all domain events from aggreagtes
             var domainEvents = aggregates
                 .SelectMany(x => x.DomainEvents)
                 .ToList();
             //clear domain events that will be published
             aggregates.ToList().ForEach(x => x.ClearDomainEvents());
 
+            //publish or send events to all subscribed handlers
             foreach (var domainEvent in domainEvents)
                 await mediator.Publish(domainEvent);
         }
