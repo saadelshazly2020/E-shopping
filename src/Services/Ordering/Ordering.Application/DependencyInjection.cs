@@ -17,7 +17,8 @@ namespace Ordering.Application
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());//register mediator service from current assembly
-              
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
             return services;
 
