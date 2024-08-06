@@ -1,12 +1,4 @@
-﻿using BuildingBlocks.Exceptions;
-using Ordering.Application.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ordering.Application.Orders.Commands.UpdateOrder
+﻿namespace Ordering.Application.Orders.Commands.UpdateOrder
 {
     public class UpdateOrderCommandHandler(IApplicationDBContext dbContext) : ICommandHandler<UpdateOrderCommand, UpdateOrderResult>
     {
@@ -15,7 +7,7 @@ namespace Ordering.Application.Orders.Commands.UpdateOrder
             var order = dbContext.Orders.FirstOrDefault(x => x.Id.Value == command.Order.Id);
             if (order == null)
             {
-                throw new OrderNotFoundException("Order",command.Order.Id);
+                throw new OrderNotFoundException("Order", command.Order.Id);
             }
             UpdateOrderWithNewValues(order, command.Order);
             dbContext.Orders.Update(order);
