@@ -2,7 +2,7 @@
 
 public record UpdateOrderCommand(OrderDto Order) : ICommand<UpdateOrderResult>;
 
-public record UpdateOrderResult(bool IsUpdated);
+public record UpdateOrderResult(bool IsSuccess);
 
 public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
 {

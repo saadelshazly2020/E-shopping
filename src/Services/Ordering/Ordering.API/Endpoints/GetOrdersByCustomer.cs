@@ -11,7 +11,7 @@ public class GetOrdersByCustomer : ICarterModule
         {
             var result = await sender.Send(new GetOrdersByCustomerQuery(customerId));
             var response = result.Adapt<GetOrdersByCustomerResponse>();
-            Results.Ok(response);
+            return Results.Ok(response);
 
         }).Produces<GetOrdersByCustomerResponse>(StatusCodes.Status201Created)
           .ProducesProblem(StatusCodes.Status400BadRequest)

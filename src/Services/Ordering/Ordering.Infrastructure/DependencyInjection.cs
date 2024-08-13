@@ -7,8 +7,8 @@ namespace Ordering.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("Database");
             //add interceptors to DI
-            services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
-            services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+            //services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+            //services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
             //add db context to services with connection string configuration
             services
                 .AddDbContext<ApplicationDBContext>((sp, opt) =>

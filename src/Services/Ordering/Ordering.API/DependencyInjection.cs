@@ -10,6 +10,11 @@ namespace Ordering.API
 
             // add service like carter
             services.AddCarter();
+            services.AddLogging();
+            services.AddControllers();
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
             return services;
         }
 
@@ -18,6 +23,12 @@ namespace Ordering.API
             //use service like UseCarter
             app.MapCarter();
 
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             return app;
 
 

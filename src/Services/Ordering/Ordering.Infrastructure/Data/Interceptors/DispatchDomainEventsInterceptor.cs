@@ -41,7 +41,7 @@ namespace Ordering.Infrastructure.Data.Interceptors
             //clear domain events that will be published
             aggregates.ToList().ForEach(x => x.ClearDomainEvents());
 
-            //publish or send events to all subscribed handlers
+            //publish or send events to all subscribed handlers like OrderCreatedEventHandler
             foreach (var domainEvent in domainEvents)
                 await mediator.Publish(domainEvent);
         }

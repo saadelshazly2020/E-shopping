@@ -20,6 +20,8 @@ namespace Ordering.Infrastructure.Data.Extensions
         {
             Product.Create(ProductId.Of(new Guid("b6d40124-b573-4416-90cd-3a4c9f00e158")),"Iphone X",5000),
             Product.Create(ProductId.Of(new Guid("ad537cc8-03af-4197-9d6e-9420ec215fc9")),"Huawei Laptop",4600),
+            Product.Create(ProductId.Of(new Guid("40a3d884-6eae-47c1-b2ae-3e06b8477d0f")),"Club de nuit intense man",91),
+            Product.Create(ProductId.Of(new Guid("cc52588e-1b7f-4076-9e51-b3944992dd63")),"Lattafa Hatem",54),
 
         };
 

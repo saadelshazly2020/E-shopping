@@ -11,7 +11,7 @@ public class CreateOrder : ICarterModule
             //map from request to command
             var command = request.Adapt<CreateOrderCommand>();
             //handle creation by mediator
-            var result = sender.Send(command);
+            var result =await sender.Send(command);
             //map result to CreateOrderResponse
             var response = result.Adapt<CreateOrderResponse>();
 

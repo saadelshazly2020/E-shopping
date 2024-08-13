@@ -13,7 +13,7 @@ public class GetOrdersByName : ICarterModule
             //send request to mediator handler
             var result = await sender.Send(new GetOrdersByNameQuery(orderName));
             var response = result.Adapt<GetOrdersByNameResponse>();
-            Results.Ok(response);
+            return Results.Ok(response);
 
         }).Produces<GetOrdersByNameResponse>(StatusCodes.Status201Created)
           .ProducesProblem(StatusCodes.Status400BadRequest)

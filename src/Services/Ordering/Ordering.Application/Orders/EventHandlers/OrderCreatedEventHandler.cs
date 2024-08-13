@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Orders.EventHandlers
 {
-    public class OrderCreatedEventHandler(ILogger logger) : INotificationHandler<OrderCreatedEvent>
+    public class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger) : INotificationHandler<OrderCreatedEvent>
     {
         public Task Handle(OrderCreatedEvent notification, CancellationToken cancellationToken)
         {
