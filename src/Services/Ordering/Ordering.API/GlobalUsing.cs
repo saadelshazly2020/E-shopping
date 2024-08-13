@@ -8,3 +8,12 @@ global using Ordering.Application.Orders.Commands.DeleteOrder;
 global using Ordering.Application.Orders.Queries.GetOrders;
 global using BuildingBlocks.Pagination;
 
+global using BuildingBlocks.Exceptions.handlers;
+global using HealthChecks.UI.Client;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
+global using Ordering.API;
+global using Ordering.Application;
+global using Ordering.Infrastructure;
+global using Ordering.Infrastructure.Data.Extensions;
+

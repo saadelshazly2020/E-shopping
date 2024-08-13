@@ -1,11 +1,10 @@
-﻿using Carter;
-using MediatR;
+﻿
 
 namespace Ordering.API
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApiServices(this IServiceCollection services)
+        public static IServiceCollection AddApiServices(this IServiceCollection services, ConfigurationManager configuration)
         {
 
             // add service like carter
@@ -15,6 +14,10 @@ namespace Ordering.API
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddExceptionHandler<CustomExceptionHandler>();
+            services.AddHealthChecks().AddSqlServer(configuration.GetConnectionString("Database")!);//add health check service for app and postgresql database
+
             return services;
         }
 
@@ -29,6 +32,11 @@ namespace Ordering.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseExceptionHandler(config => { });
+            app.UseHealthChecks("/Health", new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
             return app;
 
 
