@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Carter;
+using MediatR;
 
 namespace Ordering.API
 {
@@ -8,13 +9,14 @@ namespace Ordering.API
         {
 
             // add service like carter
+            services.AddCarter();
             return services;
         }
 
         public static WebApplication UseApiServices(this WebApplication app)
         {
             //use service like UseCarter
-
+            app.MapCarter();
 
             return app;
 
