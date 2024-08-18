@@ -1,16 +1,5 @@
 
-
-using Basket.API.Data;
-using BuildingBlocks.Exceptions.handlers;
-using Discount.Grpc.Protos;
-using HealthChecks.UI.Client;
-using Marten;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Caching.Distributed;
-
 var builder = WebApplication.CreateBuilder(args);
-//configure services here 
-
 
 //add services to DI container
 
@@ -30,8 +19,6 @@ builder.Services.AddMarten(config =>//for postgresql ORM
 }).UseLightweightSessions();
 
 
-
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 //add caching CachedBasketRepository decorator[decorator pattern]
@@ -54,9 +41,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 
-//add health check service for application and postresql database
-builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("redis")!);//add health check service for app and postgresql database
+
 //Add Grpc client to 
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
 {
@@ -64,12 +49,22 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
 }).ConfigurePrimaryHttpMessageHandler(() =>
 {
-    var handler = new HttpClientHandler { 
-    ServerCertificateCustomValidationCallback=HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
     };
     return handler;
 });
 
+//async communication [add message broker to services DI]
+builder.Services.AddMessageBroker(builder.Configuration);
+
+//crosscutting concerns
+//1. exception handling
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+//2. add health check service for application and postresql database
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("redis")!);//add health check service for app and postgresql database
 
 var app = builder.Build();
 
