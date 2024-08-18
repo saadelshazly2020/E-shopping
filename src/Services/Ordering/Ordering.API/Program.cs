@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //ADD DI services
 builder.Services
-    .AddApplicationServices()
+    .AddApplicationServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration)
     .AddApiServices(builder.Configuration);
 
