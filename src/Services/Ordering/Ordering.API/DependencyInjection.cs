@@ -16,6 +16,7 @@ namespace Ordering.API
             services.AddSwaggerGen();
 
             services.AddExceptionHandler<CustomExceptionHandler>();
+
             services.AddHealthChecks().AddSqlServer(configuration.GetConnectionString("Database")!);//add health check service for app and postgresql database
 
             return services;
