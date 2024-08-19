@@ -3,6 +3,7 @@ using BuildingBlocks.Messaging.MassTransit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 using Ordering.Application.Orders.EventHandlers;
 using Ordering.Domain.Events;
 using System;
@@ -29,6 +30,8 @@ namespace Ordering.Application
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
+            //add feature managment [default section is FeatureManagement in appsettings]
+            services.AddFeatureManagement();
             // add message broker with config to consume checkout event from rabbitMQ
             services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
