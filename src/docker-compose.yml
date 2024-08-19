@@ -19,6 +19,9 @@ services:
   orderDb:
     image: mcr.microsoft.com/mssql/server
 
+  messagebroker:
+    image:  rabbitmq:management
+
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
