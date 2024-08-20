@@ -32,8 +32,8 @@ public class BasketCheckoutEventHandler
             Status: OrderStatus.Pending,
             OrderItems:
             [
-                new OrderItemDto(orderId,new Guid("c2bf35be-a7eb-48dd-bd40-2d62e2271439"),2,350),
-                new OrderItemDto(orderId,new Guid("6adcf77c-a88f-44eb-a6aa-f59aa3624360"),1,200)
+                new OrderItemDto(orderId,new Guid("40A3D884-6EAE-47C1-B2AE-3E06B8477D0F"),2,350),
+                new OrderItemDto(orderId,new Guid("CC52588E-1B7F-4076-9E51-B3944992DD63"),1,200)
                 
             ]);
 
