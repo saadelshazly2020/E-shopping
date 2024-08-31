@@ -48,7 +48,7 @@
 
     public record GetOrdersByCustomerResponse(IEnumerable<OrderModel> Orders);
     public record GetOrdersByNameResponse(IEnumerable<OrderModel> Orders);
-
+    public record PaginationRequest(int PageIndex = 0, int PageSize = 10);
 
 
 }
