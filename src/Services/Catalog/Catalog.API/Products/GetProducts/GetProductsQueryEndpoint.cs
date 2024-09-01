@@ -3,7 +3,7 @@ using Catalog.API.Products.CreateProduct;
 
 namespace Catalog.API.Products.GetProducts
 {
-    public record GetProductsRequest(int? PageNumber, int? PageSize);
+    public record GetProductsRequest(int? PageNumber = 0, int? PageSize = 10);
     public record GetProductsResponse(IEnumerable<Models.Product> Products);
     public class GetProductsQueryEndpoint : ICarterModule
     {
