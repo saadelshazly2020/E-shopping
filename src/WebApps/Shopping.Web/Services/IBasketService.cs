@@ -16,5 +16,28 @@ namespace Shopping.Web.Services
 
         [Post("/basket-service/basket/checkout")]
         Task<CheckoutBasketResponse> CheckoutBasket(CheckoutBasketRequest request);
+
+        public async Task<ShoppingCartModel> LoadBasket()
+        {
+            var userName = "Saad";
+            ShoppingCartModel basket;
+            try
+            {
+                var result = await GetBasket(userName);
+                basket = result.Cart;
+            }
+            catch (Exception)
+            {
+
+                basket = new ShoppingCartModel
+                {
+                    UserName = userName,
+                    Items = []
+                };
+            }
+
+            return basket;
+
+        }
     }
 }

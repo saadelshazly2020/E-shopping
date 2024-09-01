@@ -6,21 +6,25 @@ using Shopping.Web.Services;
 
 namespace Shopping.Web.Pages
 {
-    public class IndexModel(IBasketService basketService, ICatalogService catalogService, ILogger<IndexModel> logger) : PageModel
+    public class ProductListModel(ICatalogService catalogService, IBasketService basketService, ILogger<ProductListModel> logger)
+        : PageModel
     {
 
-        public IEnumerable<ProductModel> ProductList { get; set; } = new List<ProductModel>();
+        public IEnumerable<string> CategoryList { get; set; } = [];
+        public IEnumerable<ProductModel> ProductList { get; set; } = [];
 
-
-
-        public async Task<IActionResult> OnGetAsync()
+        [BindProperty(SupportsGet = true)]
+        public string SelectedCategory { get; set; } = default!;
+        public async Task<IActionResult> OnGetAsync(string categoryName)
         {
-            logger.LogInformation("Index OnGetAsync");
             var result = await catalogService.GetProducts();
-            ProductList = result.Products;
-            return Page();
-        }
+            CategoryList = result.Products.SelectMany(x => x.Category).Distinct();
 
+            ProductList = result.Products.Where(x => string.IsNullOrEmpty(categoryName) || x.Category.Contains(categoryName));
+
+            return Page();
+
+        }
 
         public async Task<IActionResult> OnPostAddToCartAsync(Guid productId)
         {
@@ -37,9 +41,7 @@ namespace Shopping.Web.Pages
             });
 
             await basketService.StoreBasket(new StoreBasketRequest(basket));
-           return RedirectToPage("Cart");
+            return RedirectToPage("Cart");
         }
-
-       
     }
 }
