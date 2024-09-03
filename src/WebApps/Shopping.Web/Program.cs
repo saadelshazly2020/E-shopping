@@ -9,6 +9,15 @@ builder.Services
     .AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:ProxyUrl"]!));
 
+builder.Services
+    .AddRefitClient<IBasketService>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:ProxyUrl"]!));
+
+
+builder.Services
+    .AddRefitClient<IOrderService>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:ProxyUrl"]!));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

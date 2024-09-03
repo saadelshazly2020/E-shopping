@@ -16,11 +16,11 @@ namespace Shopping.Web.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveToCartAsync(Guid productId)
+        public async Task<IActionResult> OnPostRemoveToCartAsync(Guid ProductId)
         {
             logger.LogInformation("remove item from cart button clicked");
             var basket = await basketService.LoadBasket();
-            basket.Items.RemoveAll(x => x.ProductId == productId);
+            basket.Items.RemoveAll(x => x.ProductId == ProductId);
             await basketService.StoreBasket(new StoreBasketRequest(basket));
             return RedirectToPage();
         }

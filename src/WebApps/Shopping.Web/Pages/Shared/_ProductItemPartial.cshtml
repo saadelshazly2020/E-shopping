@@ -1,10 +1,16 @@
 ﻿@model Models.Catalog.ProductModel
 
 <div class="card">
-    <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.ImageFile" alt=""></a>
+    <a asp-page="ProductDetails" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.ImageFile" alt=""></a>
     <div class="card-body">
-        <h4 class="card-title"><a asp-page="ProductDetail" asp-route-productId="@Model.Id" class="color-main">@Model.Name</a></h4>
-        <p class="card-text">@Model.Description</p>
+        <a asp-page="ProductDetails" asp-route-productId="@Model.Id">
+
+            <h4 class="card-title">
+               @Model.Name
+            </h4>
+
+            <p class="card-text">@Model.Description</p>
+        </a>
         <div class="row">
             <div class="col">
                 <p class="btn btn-danger btn-block">@Model.Price $</p>
