@@ -11,17 +11,12 @@ namespace Ordering.Infrastructure.Data.Extensions
 
         };
 
-
-
-
-
-
         public static IEnumerable<Product> Products => new List<Product>
         {
-            Product.Create(ProductId.Of(new Guid("b6d40124-b573-4416-90cd-3a4c9f00e158")),"Iphone X",5000),
-            Product.Create(ProductId.Of(new Guid("ad537cc8-03af-4197-9d6e-9420ec215fc9")),"Huawei Laptop",4600),
-            Product.Create(ProductId.Of(new Guid("40a3d884-6eae-47c1-b2ae-3e06b8477d0f")),"Club de nuit intense man",91),
-            Product.Create(ProductId.Of(new Guid("cc52588e-1b7f-4076-9e51-b3944992dd63")),"Lattafa Hatem",54),
+            Product.Create(ProductId.Of(new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61")), "IPhone X", 500),
+            Product.Create(ProductId.Of(new Guid("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914")), "Samsung 10", 400),
+            Product.Create(ProductId.Of(new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8")), "Huawei Plus", 650),
+            Product.Create(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), "Xiaomi Mi", 450)
 
         };
 
@@ -46,8 +41,8 @@ namespace Ordering.Infrastructure.Data.Extensions
                       , payment: payment1
                       , OrderStatus.Completed);
 
-                order1.Add(ProductId.Of(new Guid("b6d40124-b573-4416-90cd-3a4c9f00e158")), 2, 10000);
-                order1.Add(ProductId.Of(new Guid("ad537cc8-03af-4197-9d6e-9420ec215fc9")), 1, 4000);
+                order1.Add(ProductId.Of(new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61")), 2, 10000);
+                order1.Add(ProductId.Of(new Guid("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914")), 1, 4000);
 
                 var order2 = Order.Create(OrderId.Of(Guid.NewGuid())
                      , CustomerId.Of(new Guid("980bf3a9-7c60-42a1-8c5b-2efa8ee557cd"))
@@ -57,8 +52,8 @@ namespace Ordering.Infrastructure.Data.Extensions
                      , payment: payment2, OrderStatus.Pending);
 
 
-                order2.Add(ProductId.Of(new Guid("b6d40124-b573-4416-90cd-3a4c9f00e158")), 1, 5000);
-                order2.Add(ProductId.Of(new Guid("ad537cc8-03af-4197-9d6e-9420ec215fc9")), 2, 8000);
+                order2.Add(ProductId.Of(new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8")), 1, 5000);
+                order2.Add(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), 2, 8000);
 
 
                 return new List<Order> { order1, order2 };
