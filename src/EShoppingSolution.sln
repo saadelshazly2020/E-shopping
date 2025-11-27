@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{A0B3
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{7AE86D02-7C3F-4783-9E18-B09E66E946CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{153E39C6-756C-4F82-A8CF-B27F2D598C83} = {153E39C6-756C-4F82-A8CF-B27F2D598C83}
+		{631C53EC-B10B-4CB3-8B88-D54AD36D3207} = {631C53EC-B10B-4CB3-8B88-D54AD36D3207}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuldingBlocks", "BuldingBlocks", "{072B6CA8-2748-4D17-9BB2-7F54D6035D6C}"
 EndProject
